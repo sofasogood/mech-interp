@@ -21,9 +21,13 @@ RUN pip install --no-cache-dir \
         --index-url https://download.pytorch.org/whl/cu121 && \
     pip install --no-cache-dir \
         transformers==4.40.0 \
-	typeguard==4.2.1 \
+	    typeguard==4.2.1 \
         transformer-lens==1.10.0 \
-        sentencepiece==0.2.0
+        sentencepiece==0.2.0 && \
+        pre-commit && \
+    pip install --no-cache-dir \
+        datasets \
+        transformers
 
 ################  App code  #################
 COPY serve_hello.py .

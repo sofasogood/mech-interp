@@ -1,0 +1,18 @@
+{%- for msg in messages -%}
+{% if loop.first and msg.role != 'system' -%}
+<|im_start|>system
+You are a helpful assistant.<|im_end|>
+{% endif -%}
+
+{% if msg.role == 'system' -%}
+<|im_start|>system
+{{ msg.content.strip() }}<|im_end|>
+{% elif msg.role == 'user' -%}
+<|im_start|>user
+{{ msg.content.strip() }}<|im_end|>
+{% elif msg.role == 'assistant' -%}
+<|im_start|>assistant
+{{ msg.content.strip() }}<|im_end|>
+{% endif -%}
+{%- endfor -%}
+<|im_start|>assistant

@@ -10,19 +10,23 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # ── System deps ─────────────────────────────────────────────
 RUN apt-get update && apt-get install -y \
         python3-pip git curl ca-certificates \
+        build-essential \
     && ln -sf /usr/bin/python3 /usr/bin/python \
     && ln -sf /usr/bin/pip3 /usr/bin/pip \
     && rm -rf /var/lib/apt/lists/*
 
 # ── Python deps ─────────────────────────────────────────────
+# Install numpy first
+RUN pip install --no-cache-dir numpy
+
 # Torch 2.4.0+cu121 works with CUDA 12.4 runtime libs.
+RUN pip install --no-cache-dir torch==2.4.0+cu121 --index-url https://download.pytorch.org/whl/cu121
+
 RUN pip install --no-cache-dir \
-        torch==2.4.0+cu121 \
-        --index-url https://download.pytorch.org/whl/cu121 \
-    && pip install --no-cache-dir \
-        "vllm>=0.4.3" \
-        accelerate==0.28.0 \
-        sentencepiece==0.2.0
+    "vllm>=0.4.3" \
+    accelerate==0.28.0 \
+    sentencepiece==0.2.0 \
+    transformers
 
 # ── Expose & default cmd ───────────────────────────────────
 EXPOSE 8000

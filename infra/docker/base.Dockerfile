@@ -25,7 +25,8 @@ RUN pip install --no-cache-dir \
         transformer-lens==1.10.0 \
         "vllm>=0.4.3" \
 	sentencepiece==0.2.0 \
-        pre-commit && \
+        pre-commit \
+        deepspeed && \
     pip install --no-cache-dir \
         datasets
 
